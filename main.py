@@ -21,7 +21,7 @@ try:
 except FileNotFoundError:
     print("It seems the checkpoint file broken or disappear, please download a new one")
     q_table = {}
-
+# q_table={}
 # print(q_table)
 
 
@@ -51,7 +51,7 @@ def print_board(player):
 
 # This is the Q learning class with epsilon greedy policy
 class QLearn:
-    def __init__(self, alpha=0.1, gamma=1):
+    def __init__(self, alpha=0.03, gamma=1):
         self.alpha = alpha
         self.gamma = gamma
 
@@ -236,8 +236,8 @@ class AiPlayer:
             winner = "You won!"
         elif game_process == "draw":
             reward = 0
+            # self.ai.learn_q(play_history, reward) we don't need this as most of time it draw, switch strategy actually make it suffer
             winner = "Draw!"
-            self.ai.learn_q(play_history, reward)
         else:
             return
 
@@ -286,7 +286,7 @@ if __name__ == '__main__':
             board = [0] * 9
             numRound = 0
 
-            epsilon -= 0.000000007  # this number is for fun only
+            epsilon -= 0.00000007  # this number is for fun only
             train_num += 1
     # print("train_num: ", train_num)
 
