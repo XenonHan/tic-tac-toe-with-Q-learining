@@ -51,7 +51,7 @@ def print_board(player):
 
 # This is the Q learning class with epsilon greedy policy
 class QLearn:
-    def __init__(self, alpha=0.01, gamma=1):
+    def __init__(self, alpha=0.1, gamma=1):
         self.alpha = alpha
         self.gamma = gamma
 
@@ -286,7 +286,7 @@ if __name__ == '__main__':
             board = [0] * 9
             numRound = 0
 
-            epsilon -= 0.000000007  # train 100000000 time first
+            epsilon -= 0.000000007  # this number is for fun only
             train_num += 1
     # print("train_num: ", train_num)
 
