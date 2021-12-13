@@ -1,4 +1,4 @@
-This is a simple tic tac toe program with Q-learining. You will play the game with AI that you properly cannot win.
+This is a simple tic tac toe program with Q-learining. You will play the game with an agent that you properly cannot win.
 
 To execute the program:
 1. Clone the program and go to the program directory.
