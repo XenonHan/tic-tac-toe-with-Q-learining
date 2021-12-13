@@ -19,10 +19,10 @@ try:
     with open('checkpoint', 'rb') as f:
         q_table = pickle.load(f)
 except FileNotFoundError:
-    print("It seems the checkpoint file broken or disappear, please download a new one from the url in readme")
+    print("It seems the checkpoint file broken or disappear, please download a new one")
     q_table = {}
 
-print(q_table)
+# print(q_table)
 
 
 # we need a function to print to board
