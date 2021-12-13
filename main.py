@@ -25,7 +25,7 @@ except FileNotFoundError:
 # print(q_table)
 
 
-# we need a function to print to board
+# we need a function to print the board
 def print_board(player):
     global numRound
     numRound += 1
@@ -168,7 +168,7 @@ def check_win(symbol):
         return "continue"
 
 
-# We need a human player
+# We need a trainer to train the agent
 class TrainPlayer:
     player_type = "You"
 
@@ -203,7 +203,7 @@ class HumanPlayer:
         last_play = "human"
 
 
-# We also need a AI play to apply Q learning
+# We also need an agent to learn how to play the game with Q-learning
 class AiPlayer:
     player_type = "AI"
 
