@@ -288,7 +288,7 @@ if __name__ == '__main__':
 
             epsilon -= 0.000000007  # train 100000000 time first
             train_num += 1
-    print("train_num: ", train_num)
+    # print("train_num: ", train_num)
 
     print(winner)
     # print(q_table)
