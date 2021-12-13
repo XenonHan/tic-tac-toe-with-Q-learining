@@ -1,6 +1,5 @@
 """
-Author: Han Chi Chiu (20533742)
-Assignment: HA5
+Author: Han Chi Chiu
 Last modify: 25/11/2021
 """
 import random
