@@ -1,6 +1,7 @@
 """
 This is the tic tac toc game board
 """
+import time
 
 import future.moves.tkinter as tk
 import future.moves.tkinter.messagebox as mg
@@ -28,17 +29,19 @@ if os.name == 'nt':
     human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((55, 65)))
 else:
     ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((35, 40)))
-    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((35, 40)))
+    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((30, 40)))
 
 
 # game terminate state, win/loss/tie
 def game_terminate(btn1, btn2, btn3):
+
     for i in range(9):
         grids[i].config(state="disabled", cursor="")
         if i in [btn1, btn2, btn3]:
             grids[i].config(bg="lightgreen", highlightbackground="lightgreen")
 
-    print(game_turn)
+    game_board.update()
+
     if winner:
         mg.showinfo("Game Settled", player[(game_turn + 1) % 2] + " WIN ! ")
     else:
