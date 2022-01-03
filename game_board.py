@@ -5,9 +5,11 @@ This is the tic tac toc game board
 import future.moves.tkinter as tk
 import future.moves.tkinter.messagebox as mg
 from PIL import Image, ImageTk
-from ctypes import windll
+import os
 
-windll.shcore.SetProcessDpiAwareness(1)
+if os.name == 'nt':
+    from ctypes import windll
+    windll.shcore.SetProcessDpiAwareness(1)
 
 game_board = tk.Tk()
 game_board.title("Tic Tac Toc")
