@@ -7,10 +7,6 @@ import future.moves.tkinter.messagebox as mg
 from PIL import Image, ImageTk
 import os
 
-if os.name == 'nt':
-    from ctypes import windll
-    windll.shcore.SetProcessDpiAwareness(1)
-
 game_board = tk.Tk()
 game_board.title("Tic Tac Toc")
 game_turn = 0
@@ -21,8 +17,16 @@ grids = []
 ai_pos = None
 human_pos = None
 theme = None
-ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((50, 60)))
-human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((45, 55)))
+
+if os.name == 'nt':
+    from ctypes import windll
+    windll.shcore.SetProcessDpiAwareness(1)
+    ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((50, 60)))
+    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((45, 55)))
+else:
+    ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((30, 35)))
+    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((30, 35)))
+
 
 
 # game terminate state, win/loss/tie
@@ -30,6 +34,7 @@ def game_terminate(btn1, btn2, btn3):
     for i in range(9):
         grids[i].config(state="disabled", cursor="")
         if i in [btn1, btn2, btn3]:
+            print(True)
             grids[i].config(bg="lightgreen")
 
     print(game_turn)
