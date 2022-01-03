@@ -7,26 +7,28 @@ import future.moves.tkinter.messagebox as mg
 from PIL import Image, ImageTk
 import os
 
+if os.name == 'nt':
+    print(True)
+    from ctypes import windll
+
+    windll.shcore.SetProcessDpiAwareness(1)
+
 game_board = tk.Tk()
 game_board.title("Tic Tac Toc")
 game_turn = 0
 winner = False
-symbol = [('X','#BF3EFF'), ('O','#FF8C00')]
+symbol = [('X', '#BF3EFF'), ('O', '#FF8C00')]
 player = []
 grids = []
 ai_pos = None
 human_pos = None
 theme = None
-
 if os.name == 'nt':
-    from ctypes import windll
-    windll.shcore.SetProcessDpiAwareness(1)
-    ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((50, 60)))
-    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((45, 55)))
+    ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((60, 70)))
+    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((55, 65)))
 else:
-    ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((30, 35)))
-    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((30, 35)))
-
+    ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((35, 40)))
+    human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((35, 40)))
 
 
 # game terminate state, win/loss/tie
@@ -34,8 +36,7 @@ def game_terminate(btn1, btn2, btn3):
     for i in range(9):
         grids[i].config(state="disabled", cursor="")
         if i in [btn1, btn2, btn3]:
-            print(True)
-            grids[i].config(bg="lightgreen")
+            grids[i].config(bg="lightgreen", highlightbackground="lightgreen")
 
     print(game_turn)
     if winner:
@@ -82,7 +83,8 @@ def check_win():
 def button_clicked(button):
     global game_turn
     if button["text"] == " ":
-        button.config(text=symbol[game_turn % 2][0], state="disabled", cursor="", disabledforeground=symbol[game_turn % 2][1])
+        button.config(text=symbol[game_turn % 2][0], state="disabled", cursor="",
+                      disabledforeground=symbol[game_turn % 2][1])
         game_turn += 1
         check_win()
 
@@ -91,7 +93,8 @@ def button_clicked(button):
 def init_button():
     for i in range(9):
         grids.append(
-            tk.Button(game_board, text=" ", font=("Helvetica", 20), height=3, width=6, bg="silver", cursor="hand2",
+            tk.Button(game_board, text=" ", font=("Helvetica", 25), height=3, width=6, bg="silver",
+                      highlightbackground="silver", cursor="hand2",
                       disabledforeground="black", command=lambda but_num=i: button_clicked(grids[but_num])))
         grids[i].grid(row=(i + 3) // 3, column=i % 3)
 
@@ -100,7 +103,7 @@ def init_button():
 def reset(ans):
     global game_turn, winner
     for i in range(9):
-        grids[i].config(text=" ", bg="silver", cursor="hand2", state="normal")
+        grids[i].config(text=" ", bg="silver", highlightbackground="silver", cursor="hand2", state="normal")
     game_turn = 0
     winner = False
     play_order(ans)
@@ -121,10 +124,10 @@ def play_order(ans=None):
         theme.grid(row=0, column=0, columnspan=3)
         ai_pos = tk.Label(theme, image=ai_image)
         ai_pos.grid(row=0, column=player.index('AI') * 2, padx=(player.index('AI') * 65, 0))
-        tk.Label(theme, text=": X", font=("Helvetica", 20), height=1, fg='#BF3EFF').grid(row=0, column=1)
+        tk.Label(theme, text=": X", font=("Helvetica", 25), height=1, fg='#BF3EFF').grid(row=0, column=1)
         human_pos = tk.Label(theme, image=human_image)
         human_pos.grid(row=0, column=player.index('YOU') * 2, padx=(player.index('YOU') * 65, 0))
-        tk.Label(theme, text=": O", font=("Helvetica", 20), height=1, fg='#FF8C00').grid(row=0, column=3)
+        tk.Label(theme, text=": O", font=("Helvetica", 25), height=1, fg='#FF8C00').grid(row=0, column=3)
     else:
         ai_pos.grid(row=0, column=player.index('AI') * 2, padx=(player.index('AI') * 55, 0))
         human_pos.grid(row=0, column=player.index('YOU') * 2, padx=(player.index('YOU') * 55, 0))
