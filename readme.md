@@ -1,6 +1,7 @@
 
 
 
+<h1> About </h1>
 This is a simple tic tac toe program with Q-learining. You will play the game with an agent that you properly cannot win.
 
 <h1> How to run the program </h1>
@@ -8,6 +9,7 @@ This is a simple tic tac toe program with Q-learining. You will play the game wi
 <h2> For the new version WITH GUI: </h2>
 
 <h3> Dependicies </h3>
+
 1. future
 2. pillow
 3. ctypes (windows only)
