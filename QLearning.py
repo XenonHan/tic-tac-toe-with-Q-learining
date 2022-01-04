@@ -5,7 +5,7 @@ The Q-learning in this implementation is done by Q-table in format:
 Reward:
     win: +1
     loss: -1
-    draw: 0Q
+    draw: 0
 """
 import random
 import pickle
