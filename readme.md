@@ -7,8 +7,15 @@ This is a simple tic tac toe program with Q-learining. You will play the game wi
 
 <h2> For the new version WITH GUI: </h2>
 
+<h3> Dependicies </h3>
+1. future
+2. pillow
+3. ctypes (windows only)
+
+<h3> To execute the program: </h3>
+
 1. Clone the program and go to the program directory.
-2. In the proram loacation, run "python ./game_launcher.py" with command prompt
+2. In the proram loacation, run "python3 ./game_launcher.py" with command prompt
 
 <h3> Preview </h3>
 pending...
@@ -19,7 +26,7 @@ pending...
 
 1. Clone the program and go to the program directory.
 2. Make sure the program main.py and checkpoint files are loacte in the same location
-3. In the proram loacation, run "python ./old_version.py" with command prompt
+3. In the proram loacation, run "python3 ./old_version.py" with command prompt
 
 <h3> To play the Tic-Tac-Toe: </h3>
 
