@@ -12,6 +12,7 @@ if os.name == 'nt':
     windll.shcore.SetProcessDpiAwareness(1)
 
 import settings
+from AI_agent import AI
 
 game_board = tk.Tk()
 game_board.title("Tic Tac Toc")
@@ -118,13 +119,15 @@ def init_button():
 
 # Reset all the button
 def reset(ans):
-    global game_turn, winner
+    global game_turn, winner, ai
     for i in range(9):
         settings.grids[i].config(text=" ", bg="silver", highlightbackground="silver", cursor="hand2", state="normal")
     game_turn = 0
     winner = False
-    play_order(ans)
     settings.reset()
+    del ai
+    ai = AI()
+    play_order(ans)
 
 
 # decide the game order and display the img
@@ -165,9 +168,9 @@ def init_menu():
     game_board.config(menu=top_bar)
 
 
-def init(agent):
+def init():
     global ai
-    ai = agent
+    ai = AI()
     init_menu()
     init_button()
     game_board.eval('tk::PlaceWindow . center')
