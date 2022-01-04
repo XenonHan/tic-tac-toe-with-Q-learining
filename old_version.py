@@ -1,6 +1,8 @@
 """
 Author: Han Chi Chiu
-Last modify: 25/11/2021
+This is the original version of the tic tac toc game without GUI
+You can TRAIN the checkpoint by running this single program and input 3
+If you just want to play the tic tac toc game with GUI, please instead run game_launcher.py
 """
 import random
 import sys
@@ -243,7 +245,7 @@ class AiPlayer:
 
 
 if __name__ == '__main__':
-    order = int(input("input 1 if you want to play first, otherwise input 2: "))
+    order = int(input("input 1 to play first, 2 to play second, 3 to train the AI: "))
     ai_player = None
     if order == 1:
         player_1 = HumanPlayer(1)

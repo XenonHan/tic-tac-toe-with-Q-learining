@@ -1,18 +1,17 @@
 """
 This is the tic tac toc game board
 """
-import time
-
 import future.moves.tkinter as tk
 import future.moves.tkinter.messagebox as mg
 from PIL import Image, ImageTk
 import os
 
 if os.name == 'nt':
-    print(True)
     from ctypes import windll
 
     windll.shcore.SetProcessDpiAwareness(1)
+
+import settings
 
 game_board = tk.Tk()
 game_board.title("Tic Tac Toc")
@@ -20,10 +19,11 @@ game_turn = 0
 winner = False
 symbol = [('X', '#BF3EFF'), ('O', '#FF8C00')]
 player = []
-grids = []
 ai_pos = None
 human_pos = None
 theme = None
+ai = None
+
 if os.name == 'nt':
     ai_image = ImageTk.PhotoImage(Image.open('./img/robot.png').resize((60, 70)))
     human_image = ImageTk.PhotoImage(Image.open('./img/child.png').resize((55, 65)))
@@ -34,43 +34,51 @@ else:
 
 # game terminate state, win/loss/tie
 def game_terminate(btn1, btn2, btn3):
-
     for i in range(9):
-        grids[i].config(state="disabled", cursor="")
+        settings.grids[i].config(state="disabled", cursor="")
         if i in [btn1, btn2, btn3]:
-            grids[i].config(bg="lightgreen", highlightbackground="lightgreen")
+            settings.grids[i].config(bg="lightgreen", highlightbackground="lightgreen")
 
     game_board.update()
 
     if winner:
+        settings.game_winner = player[(game_turn + 1) % 2]
+        ai.check_and_learn()
         mg.showinfo("Game Settled", player[(game_turn + 1) % 2] + " WIN ! ")
     else:
+        settings.game_winner = "DRAW"
+        ai.check_and_learn()
         mg.showinfo("Game Settled", "DRAW ! ")
 
+    # check if a winner exist
 
-# check if a winner exist
+
 def check_win():
     global winner
     # check row & column
     for i in range(3):
         # check row
-        if grids[0 + i * 3]["text"] != " " and grids[0 + i * 3]["text"] == grids[1 + i * 3]["text"] == \
-                grids[2 + i * 3][
+        if settings.grids[0 + i * 3]["text"] != " " and settings.grids[0 + i * 3]["text"] == settings.grids[1 + i * 3][
+            "text"] == \
+                settings.grids[2 + i * 3][
                     "text"]:
             winner = True
             game_terminate(0 + i * 3, 1 + i * 3, 2 + i * 3)
             return
         # check col
-        elif grids[0 + i]["text"] != " " and grids[0 + i]["text"] == grids[3 + i]["text"] == grids[6 + i]["text"]:
+        elif settings.grids[0 + i]["text"] != " " and settings.grids[0 + i]["text"] == settings.grids[3 + i]["text"] == \
+                settings.grids[6 + i]["text"]:
             winner = True
             game_terminate(0 + i, 3 + i, 6 + i)
             return
         # check diagonal
-        elif grids[4]["text"] != " " and grids[0]["text"] == grids[4]["text"] == grids[8]["text"]:
+        elif settings.grids[4]["text"] != " " and settings.grids[0]["text"] == settings.grids[4]["text"] == \
+                settings.grids[8]["text"]:
             winner = True
             game_terminate(0, 4, 8)
             return
-        elif grids[4]["text"] != " " and grids[2]["text"] == grids[4]["text"] == grids[6]["text"]:
+        elif settings.grids[4]["text"] != " " and settings.grids[2]["text"] == settings.grids[4]["text"] == \
+                settings.grids[6]["text"]:
             winner = True
             game_terminate(2, 4, 6)
             return
@@ -83,44 +91,53 @@ def check_win():
 
 
 # event when a button clicked
-def button_clicked(button):
+def button_clicked(but_num):
     global game_turn
-    if button["text"] == " ":
-        button.config(text=symbol[game_turn % 2][0], state="disabled", cursor="",
-                      disabledforeground=symbol[game_turn % 2][1])
+    if settings.grids[but_num]["text"] == " ":
+        settings.grids[but_num].config(text=symbol[game_turn % 2][0], state="disabled", cursor="",
+                                       disabledforeground=symbol[game_turn % 2][1])
         game_turn += 1
+        settings.play_history.append(but_num)
+        settings.last_play = player[game_turn % 2]
+        settings.board[but_num] = 1
         check_win()
+        settings.ai_turn = not settings.ai_turn
+        if settings.ai_turn and settings.game_winner is None:
+            ai.draw()
 
 
 # Initialize list of buttons
 def init_button():
     for i in range(9):
-        grids.append(
+        settings.grids.append(
             tk.Button(game_board, text=" ", font=("Helvetica", 25), height=3, width=6, bg="silver",
                       highlightbackground="silver", cursor="hand2",
-                      disabledforeground="black", command=lambda but_num=i: button_clicked(grids[but_num])))
-        grids[i].grid(row=(i + 3) // 3, column=i % 3)
+                      disabledforeground="black", command=lambda but_num=i: button_clicked(but_num)))
+        settings.grids[i].grid(row=(i + 3) // 3, column=i % 3)
 
 
 # Reset all the button
 def reset(ans):
     global game_turn, winner
     for i in range(9):
-        grids[i].config(text=" ", bg="silver", highlightbackground="silver", cursor="hand2", state="normal")
+        settings.grids[i].config(text=" ", bg="silver", highlightbackground="silver", cursor="hand2", state="normal")
     game_turn = 0
     winner = False
     play_order(ans)
+    settings.reset()
 
 
 # decide the game order and display the img
 def play_order(ans=None):
     global player, theme, ai_pos, human_pos
     if ans is None:
-        mg.askyesno("Question", "Do you want to play first?")
+        ans = mg.askyesno("Question", "Do you want to play first?")
     if ans:
         player = ["YOU", "AI"]
     else:
         player = ["AI", "YOU"]
+        settings.ai_turn = True
+        ai.draw()
 
     if not theme:
         theme = tk.Frame(game_board)
@@ -148,9 +165,11 @@ def init_menu():
     game_board.config(menu=top_bar)
 
 
-# init
-init_menu()
-init_button()
-game_board.eval('tk::PlaceWindow . center')
-play_order()
-game_board.mainloop()
+def init(agent):
+    global ai
+    ai = agent
+    init_menu()
+    init_button()
+    game_board.eval('tk::PlaceWindow . center')
+    play_order()
+    game_board.mainloop()
