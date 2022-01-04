@@ -27,7 +27,7 @@ This is a simple tic tac toe program with Q-learining. You will play the game wi
 
 ![select](https://user-images.githubusercontent.com/55251580/148041736-08158f55-703e-49da-9a61-db1bed41cc0d.png)
 
-<h2> For the old command version: </h2>
+<h2> For the old command prompt version: </h2>
 
 <h3> To execute the program: </h3>
 
