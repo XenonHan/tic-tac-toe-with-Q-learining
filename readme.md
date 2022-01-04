@@ -1,3 +1,6 @@
+
+Developing GUI version...
+
 This is a simple tic tac toe program with Q-learining. You will play the game with an agent that you properly cannot win.
 
 To execute the program:
@@ -12,4 +15,3 @@ To play the Tic-Tac-Toe:
 4. By checking the game board printing on the console, keep playing the game with agent until you win or loss or the game drawn.
 5. After you win/loss/draw, a prompt will be printed to tell you.
 
-Developing GUI version...
