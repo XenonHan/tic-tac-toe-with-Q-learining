@@ -20,7 +20,12 @@ This is a simple tic tac toe program with Q-learining. You will play the game wi
 2. In the proram loacation, run "python3 ./game_launcher.py" with command prompt
 
 <h3> Preview </h3>
-pending...
+
+![AI_win](https://user-images.githubusercontent.com/55251580/148041584-c30f82fa-a109-4de6-8fdd-bcbfe62d28de.png)
+
+![draw](https://user-images.githubusercontent.com/55251580/148041598-38a04887-ed17-4933-b455-244616105553.png)
+
+![select](https://user-images.githubusercontent.com/55251580/148041736-08158f55-703e-49da-9a61-db1bed41cc0d.png)
 
 <h2> For the old command version: </h2>
 
