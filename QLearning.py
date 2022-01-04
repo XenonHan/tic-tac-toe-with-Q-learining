@@ -1,6 +1,6 @@
 """
 The Q-learning in this implementation is done by Q-table in format:
-{action_history, [prob for take grid 0 - 8]}
+{action_history, [prob. to take grid 0 - 8]}
 
 Reward:
     win: +1
