@@ -17,7 +17,7 @@ This is a simple tic tac toe program with Q-learining. You will play the game wi
 <h3> To execute the program: </h3>
 
 1. Clone the program and go to the program directory.
-2. In the proram loacation, run "python3 ./game_launcher.py" with command prompt
+2. In the proram loacation, run "python3 ./game_launcher.py" or "py ./game_launcher.py" on command prompt
 
 <h3> Preview </h3>
 
